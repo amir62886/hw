@@ -89,3 +89,4 @@ def registration():
         db.session.commit()
         return "User added"
     return render_template("registration.html")
+    return 'Hello'
