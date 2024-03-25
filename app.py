@@ -90,3 +90,20 @@ def registration():
         return "User added"
     return render_template("registration.html")
     return 'Hello'
+
+@app.route("/login", methods=['POST', 'GET'])
+def login():
+    if request.method == 'POST':
+        email = request.form['email']
+        password = request.form['password']
+        user = User.query.filter_by(email = email).first()
+        if user and check_password_hash(user.hashedPassword, password):
+            login_user(user)
+            return redirect('/')
+        return render_template('login.html')
+    return render_template('login.html')
+
+@app.route('/dashboard')
+@login_required
+def dashboard():
+    return 'Welcome to dashboard'
