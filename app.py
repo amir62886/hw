@@ -26,7 +26,7 @@ class User(db.Model):
         user = self.query.filter_by(id = user_id).first()
         return user
     
-    def is_autenticated(self):
+    def is_authenticated(self):
         return True
     
     def is_active(self):
@@ -53,11 +53,14 @@ def product(id):
     return render_template("product.html", product = product)
 
 @app.route("/addproduct", methods=['GET', 'POST'])
+@login_required
 def addproduct():
     if request.method == 'GET':
         return render_template ("addproduct.html")  
     else:
         name = request.form['name']
+        if not name:
+            return 'Error'
         price = request.form['price']
         description = request.form['description']
         imageName = request.form['imageName']
